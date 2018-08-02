@@ -1,5 +1,7 @@
 ﻿using DocoptNet;
 using System;
+using rcl.Commands;
+using System.Collections.Generic;
 
 namespace rcl
 {
@@ -8,43 +10,50 @@ namespace rcl
         private const string usage = @"
 RabbitCL
 Usage:
-    rcl (set|get) configuration [--host=<host>] [--port=<port>] [--user=<user>] [--pass=<pass>] [--ssl=<port>]
-    rcl (-h | --help)
+    rcl configuration [--host=<host>] [--port=<port>] [--user=<user>] [--pass=<pass>] [--ssl=<ssl>]
+    rcl get           --queue=<queue> --ack=<port> 
+    rcl               (-h | --help)
     rcl --version
     rcl --config
 
 Options:
-    set             Setting values.
-    get             Getting value.
-    configuration   Configuration properties.
-    -h --help       Show this screen.
-    --version       Show version.
-    --config        Get current configuration settings.
-    --drifting      Drifting mine.
-    --host=HOST     Broker host connection [default: localhost]    
-    --port=PORT     Broker port connection [default: 5672]
-    --user=USER     Broker username [default: guest]
-    --pass=PASS     Broker password [default: guest]
-    --ssl=SSL       Broker enable SSL [default: false]
-
+    -h --help         Show this screen.
+    --version         Show version.
+    --config          Get current configuration settings.
+    --host=HOST       Broker host connection
+    --port=PORT       Broker port connection
+    --user=USER       Broker username
+    --pass=PASS       Broker password
+    --ssl=SSL         Broker enable SSL
+    --queue=QUEUE     Broker queue name
 ";
 
         static void Main(string[] args)
         {
             var arguments = new Docopt().Apply(usage, args, version: "Rabbit CL 0.0.1", exit: true);
 
-            foreach (var argument in arguments)
+
+            //foreach (var argument in arguments)
+            //{
+            //    Console.WriteLine("{0} = {1}", argument.Key, argument.Value);
+            //}
+
+            var command = Factory(arguments);
+            if (command != null)
             {
-                switch(argument.Key)
-                {
-                    //case "--config":
-                    //    Console.WriteLine("get default configuration {0} = {1}", argument.Key, argument.Value);
-                    //    break;
-                    default:
-                        Console.WriteLine("{0} = {1}", argument.Key, argument.Value);
-                        break;
-                }
+                Console.WriteLine(command.Name);
+                command.Execute(arguments);
             }
+        }
+
+        private static Command Factory(IDictionary<string, ValueObject> arguments)
+        {
+            if (arguments["--config"].IsTrue)
+                return new GetConfigurationCommand();
+            else if (arguments["configuration"].IsTrue)
+                return new SetConfigurationCommand();
+
+            return null;
         }
     }
 }
