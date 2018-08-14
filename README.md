@@ -2,7 +2,7 @@
 RabbitCL theres is a cli for RabbitMQ client
 
 ### CLI for RabbitMQ
-
+```
 Usage:
     rcl configuration --host=<host> --port=<port> --user=<user> --pass=<pass> --ssl=<ssl>
     rcl consume       --queue=<queue> --ack=<ack> --out=<destinationFolder>
@@ -22,3 +22,4 @@ Options:
     --queue=QUEUE     Broker queue name
     --ack=ACK         Acknowledge message
     --out=OUTPUT      Output folder"
+```
