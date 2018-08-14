@@ -2,47 +2,40 @@
 using System;
 using rcl.Commands;
 using System.Collections.Generic;
+using rcl.Configurations;
 
 namespace rcl
 {
     class Program
     {
-        private const string usage = @"
-RabbitCL
-Usage:
-    rcl configuration [--host=<host>] [--port=<port>] [--user=<user>] [--pass=<pass>] [--ssl=<ssl>]
-    rcl get           --queue=<queue> --ack=<port> 
-    rcl               (-h | --help)
-    rcl --version
-    rcl --config
-
-Options:
-    -h --help         Show this screen.
-    --version         Show version.
-    --config          Get current configuration settings.
-    --host=HOST       Broker host connection
-    --port=PORT       Broker port connection
-    --user=USER       Broker username
-    --pass=PASS       Broker password
-    --ssl=SSL         Broker enable SSL
-    --queue=QUEUE     Broker queue name
-";
-
         static void Main(string[] args)
         {
-            var arguments = new Docopt().Apply(usage, args, version: "Rabbit CL 0.0.1", exit: true);
-
+            var arguments = new Docopt().Apply(UsageConfiguration.USAGE, args, version: "Rabbit CL 0.0.1", exit: true);
 
             //foreach (var argument in arguments)
             //{
             //    Console.WriteLine("{0} = {1}", argument.Key, argument.Value);
             //}
 
-            var command = Factory(arguments);
-            if (command != null)
+            try
             {
-                Console.WriteLine(command.Name);
-                command.Execute(arguments);
+                var command = Factory(arguments);
+                try
+                {
+                    if (command != null)
+                    {
+                        //Console.WriteLine(command.Name);
+                        command.Execute(arguments);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] ({command.Name}) => {ex.Message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] (COMMAND FACTORY) => {ex.Message}");
             }
         }
 
@@ -52,6 +45,8 @@ Options:
                 return new GetConfigurationCommand();
             else if (arguments["configuration"].IsTrue)
                 return new SetConfigurationCommand();
+            else if (arguments["consume"].IsTrue)
+                return new ConsumeQueueCommand();
 
             return null;
         }
