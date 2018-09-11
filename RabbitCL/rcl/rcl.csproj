@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="DocoptNet, Version=0.6.1.4, Culture=neutral, PublicKeyToken=7a38c71da49a547e, processorArchitecture=MSIL">
       <HintPath>..\packages\docopt.net.0.6.1.9\lib\net40\DocoptNet.dll</HintPath>
     </Reference>
@@ -59,6 +62,14 @@
     <ProjectReference Include="..\rcl.background\rcl.background.csproj">
       <Project>{91d356fa-91e0-43e1-9c7f-525266b1d61b}</Project>
       <Name>rcl.background</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rcl.Broker.RabbitMQ\Rcl.Broker.RabbitMQ.csproj">
+      <Project>{63c06e84-3065-4ee5-bf3d-bedff527e43c}</Project>
+      <Name>Rcl.Broker.RabbitMQ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rcl.Broker\Rcl.Broker.csproj">
+      <Project>{44116D5D-8154-484D-BC58-FD2AC91031E0}</Project>
+      <Name>Rcl.Broker</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

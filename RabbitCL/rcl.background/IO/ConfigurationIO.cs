@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using rcl.Entities;
-using System;
 using System.IO;
 using System.Reflection;
 
@@ -32,7 +31,7 @@ namespace rcl.IO
                 var line = File.ReadAllLines(_filePath)[0];
                 return JsonConvert.DeserializeObject<Configuration>(line);
             }
-            throw new Exception("CONFIG FILE NOT CONFIGURED");
+            return null;
         }
     }
 }

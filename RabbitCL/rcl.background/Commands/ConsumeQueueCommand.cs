@@ -1,27 +1,20 @@
 ﻿using DocoptNet;
 using Newtonsoft.Json;
-using rcl.Entities;
-using rcl.IO;
-using rcl.Services;
+using Rcl.Broker;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace rcl.Commands
 {
     public class ConsumeQueueCommand : Command
     {
-        private readonly QueueService _queueService;
-        private readonly Configuration _configuration;
+        private readonly IQueueService _queueService;
 
-        public ConsumeQueueCommand()
+        public ConsumeQueueCommand(IQueueService queueService)
         {
-            _configuration = new ConfigurationIO().Get();
-            _queueService = new QueueService(_configuration);
+            _queueService = queueService;
         }
 
         public override string Name => "CONSUME QUEUE CONFIGURATION";
@@ -36,15 +29,15 @@ namespace rcl.Commands
             if (!Directory.Exists(folder))
                 throw new Exception("OUTPUT PATH DOES NOT EXISTIS");
 
-            var messages = _queueService.GetMessages(queue);
+            var messages = _queueService.Get(queue);
 
             foreach (var message in messages)
             {
                 if (ack == "true")
-                    _queueService.Acknowledge(message.DeliveryTag);
+                    _queueService.Acknowledge(message);
 
                 string extension = IsJsonFormat(message.Payload) ? "json" : "txt";
-                string file = $"{folder}\\{queue}-{message.DeliveryTag}-{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}.{extension}";
+                string file = $"{folder}\\{queue}-{message.Id}-{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}.{extension}";
 
                 File.WriteAllText(file, message.Payload);
             }

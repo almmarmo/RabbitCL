@@ -1,65 +1,26 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace rcl.Entities
 {
     public class Configuration
     {
-        protected Configuration() { }
-        public Configuration(string host, string port, string username, string password, string ssl)
+        public Configuration()
         {
-            SetHost(host);
-            SetPort(port);
-            SetUsername(username);
-            SetPassword(password);
-            SetSsl(ssl);
+            _environments = new List<background.Entities.Environment>();
         }
 
-        public string Host { get; private set; }
-        public int Port { get; set; }
-        public string Username { get; private set; }
-        public string Password { get; private set; }
-        public bool Ssl { get; private set; }
+        private List<rcl.background.Entities.Environment> _environments;
+        public IEnumerable<rcl.background.Entities.Environment> Environments { get => _environments; }
 
-        public void SetHost(string _host)
+        public void AddEnvironment(rcl.background.Entities.Environment environment)
         {
-            if (string.IsNullOrEmpty(_host))
-                throw new Exception("HOST IS REQUIRED");
+            if (this.Environments.Any(x => x.Name == environment.Name))
+                throw new Exception("ENVIRONMENT NAME ALREADY EXISTIS.");
 
-            Host = _host;
-        }
-
-        public void SetPort(string _port)
-        {
-            if (string.IsNullOrEmpty(_port))
-                throw new Exception("PORT IS REQUIRED");
-
-            Port = int.Parse(_port);
-        }
-
-        public void SetUsername(string _user)
-        {
-            if (string.IsNullOrEmpty(_user))
-                throw new Exception("USERNAME IS REQUIRED");
-
-            Username = _user;
-        }
-
-        public void SetPassword(string _pass)
-        {
-            if (string.IsNullOrEmpty(_pass))
-                throw new Exception("PASSWORD IS REQUIRED");
-
-            Password = _pass;
-        }
-
-        public void SetSsl(string _ssl)
-        {
-            bool result;
-            if (string.IsNullOrEmpty(_ssl) && !bool.TryParse(_ssl, out result))
-                throw new Exception("SSL INFORMATION IS REQUIRED");
-
-            Ssl = bool.Parse(_ssl);
+            this._environments.Add(environment);
         }
 
         public override string ToString()

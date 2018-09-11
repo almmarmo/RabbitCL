@@ -59,12 +59,22 @@
     <Compile Include="Commands\SetConfigurationCommand.cs" />
     <Compile Include="Configurations\UsageConfiguration.cs" />
     <Compile Include="Entities\Configuration.cs" />
+    <Compile Include="Entities\Environment.cs" />
+    <Compile Include="Enums\EBrokerType.cs" />
     <Compile Include="IO\ConfigurationIO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\QueueService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rcl.Broker\Rcl.Broker.csproj">
+      <Project>{44116d5d-8154-484d-bc58-fd2ac91031e0}</Project>
+      <Name>Rcl.Broker</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

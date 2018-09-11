@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rcl", "rcl\rcl.csproj", "{B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rcl.background", "rcl.background\rcl.background.csproj", "{91D356FA-91E0-43E1-9C7F-525266B1D61B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rcl.Broker", "Rcl.Broker\Rcl.Broker.csproj", "{44116D5D-8154-484D-BC58-FD2AC91031E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rcl.Broker.RabbitMQ", "Rcl.Broker.RabbitMQ\Rcl.Broker.RabbitMQ.csproj", "{63C06E84-3065-4EE5-BF3D-BEDFF527E43C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{91D356FA-91E0-43E1-9C7F-525266B1D61B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91D356FA-91E0-43E1-9C7F-525266B1D61B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91D356FA-91E0-43E1-9C7F-525266B1D61B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44116D5D-8154-484D-BC58-FD2AC91031E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44116D5D-8154-484D-BC58-FD2AC91031E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44116D5D-8154-484D-BC58-FD2AC91031E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44116D5D-8154-484D-BC58-FD2AC91031E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63C06E84-3065-4EE5-BF3D-BEDFF527E43C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C06E84-3065-4EE5-BF3D-BEDFF527E43C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C06E84-3065-4EE5-BF3D-BEDFF527E43C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C06E84-3065-4EE5-BF3D-BEDFF527E43C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
