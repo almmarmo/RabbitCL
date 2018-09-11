@@ -32,23 +32,44 @@ namespace rcl.Commands
             var ack = arguments["--ack"] != null ? arguments["--ack"].Value.ToString() : "";
             var output = arguments["--out"] != null ? arguments["--out"].Value.ToString() : "";
 
-            string folder = output == "." ? Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) : output;
+            string folder = output == "." || String.IsNullOrEmpty(output) ? Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) : output;
             if (!Directory.Exists(folder))
                 throw new Exception("OUTPUT PATH DOES NOT EXISTIS");
 
             var messages = _queueService.GetMessages(queue);
 
-            foreach(var message in messages)
+            foreach (var message in messages)
             {
                 if (ack == "true")
                     _queueService.Acknowledge(message.DeliveryTag);
 
-                string file = $"{folder}\\{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}.txt";
+                string extension = IsJsonFormat(message.Payload) ? "json" : "txt";
+                string file = $"{folder}\\{queue}-{message.DeliveryTag}-{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}.{extension}";
 
                 File.WriteAllText(file, message.Payload);
             }
 
             _queueService.Dispose();
+        }
+
+        private bool IsJsonFormat(string payload)
+        {
+            payload = payload.Trim();
+            if ((payload.StartsWith("{") && payload.EndsWith("}")) || //For object
+                (payload.StartsWith("[") && payload.EndsWith("]"))) //For array
+            {
+                try
+                {
+                    JsonConvert.DeserializeObject(payload);
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            return false;
         }
     }
 }
