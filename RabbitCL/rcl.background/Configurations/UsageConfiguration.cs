@@ -6,7 +6,7 @@
 RabbitCL
 Usage:
     rcl configuration --host=<host> --port=<port> --user=<user> --pass=<pass> --ssl=<ssl>
-    rcl consume       --queue=<queue> --ack=<ack> --out=<destinationFolder>
+    rcl consume       -q --queue=<queue> -a --ack=<ack> [-o --out=<destinationFolder>]
     rcl               (-h | --help)
     rcl --version
     rcl --config
@@ -20,8 +20,8 @@ Options:
     --user=USER       Broker username
     --pass=PASS       Broker password
     --ssl=SSL         Broker enable SSL
-    --queue=QUEUE     Broker queue name
-    --ack=ACK         Acknowledge message
-    --out=OUTPUT      Output folder"; }
+    -q --queue=QUEUE  Broker queue name
+    -a --ack=ACK      Acknowledge message
+    -o --out=OUTPUT   Output folder"; }
     }
 }
