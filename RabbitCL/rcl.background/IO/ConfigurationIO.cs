@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using rcl.Entities;
 using System.IO;
 using System.Reflection;
@@ -21,7 +22,10 @@ namespace rcl.IO
             if (File.Exists(_filePath))
                 File.Delete(_filePath);
 
-            File.WriteAllText(_filePath, JsonConvert.SerializeObject(configuration));
+            JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings();
+            jsonSerializerSettings.Converters.Add(new StringEnumConverter());
+
+            File.WriteAllText(_filePath, JsonConvert.SerializeObject(configuration, jsonSerializerSettings));
         }
 
         public Configuration Get()
