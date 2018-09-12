@@ -69,6 +69,8 @@ namespace rcl
                 return new SetConfigurationCommand();
             else if (arguments["consume"].IsTrue)
                 return new ConsumeQueueCommand(Container.Resolve<IQueueService>());
+            else if (arguments["updateenv"].IsTrue)
+                return new UpdateEnvironmentCommand();
 
             return null;
         }

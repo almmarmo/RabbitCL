@@ -6,6 +6,7 @@
 RabbitCL
 Usage:
     rcl configuration --name=<name> --broker=<brokerType> --host=<host> --port=<port> --user=<user> --pass=<pass> --ssl=<ssl>
+    rcl updateenv     --name=<name> [--broker=<brokerType> --host=<host> --port=<port> --user=<user> --pass=<pass> --ssl=<ssl>]
     rcl consume       -e --env=<environment> -q --queue=<queue> -a --ack=<ack> [-o --out=<destinationFolder>]
     rcl               (-h | --help)
     rcl --version

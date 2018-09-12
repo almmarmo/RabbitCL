@@ -24,7 +24,7 @@ namespace rcl.background.Entities
         public string Password { get; private set; }
         public bool Ssl { get; private set; }
 
-        private void SetBrokerType(string _brokerType)
+        public void SetBrokerType(string _brokerType)
         {
             if (string.IsNullOrEmpty(_brokerType))
                 throw new Exception("BROKER TYPE IS REQUIRED");
