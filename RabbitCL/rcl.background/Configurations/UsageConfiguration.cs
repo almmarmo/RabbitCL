@@ -15,14 +15,16 @@ Options:
     -h --help               Show this screen.
     --version               Show version.
     --config                Get current configuration settings.
-    --host=HOST             Broker host connection
-    --port=PORT             Broker port connection
-    --user=USER             Broker username
-    --pass=PASS             Broker password
-    --ssl=SSL               Broker enable SSL
-    -e --env=ENVIRONMENT    Environment instance
-    -q --queue=QUEUE        Broker queue name
-    -a --ack=ACK            Acknowledge message
-    -o --out=OUTPUT         Output folder"; }
+    --name=NAME             Environment name.
+    --broker=BROKER         Broker provider. Possible values: RabbitMQ
+    --host=HOST             Broker host connection.
+    --port=PORT             Broker port connection.
+    --user=USER             Broker username.
+    --pass=PASS             Broker password.
+    --ssl=SSL               Broker enable SSL.
+    -e --env=ENVIRONMENT    Environment instance.
+    -q --queue=QUEUE        Broker queue name.
+    -a --ack=ACK            Acknowledge message.
+    -o --out=OUTPUT         Output folder."; }
     }
 }
