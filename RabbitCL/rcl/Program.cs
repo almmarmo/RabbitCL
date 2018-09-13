@@ -60,7 +60,7 @@ namespace rcl
             {
                 Console.WriteLine($"[ERROR] (COMMAND FACTORY) => {ex.Message}");
             }
-        }
+            }
 
         private static void EnvironmentFactory(IDictionary<string, ValueObject> arguments, Configuration config, ContainerBuilder builder)
         {

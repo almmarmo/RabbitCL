@@ -1,4 +1,5 @@
 ﻿using RabbitMQ.Client;
+using RabbitMQ.Client.Exceptions;
 using Rcl.Broker.RabbitMQ.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -57,8 +58,20 @@ namespace Rcl.Broker.RabbitMQ
             if (rountingKeys != null)
             {
                 foreach (var exchange in exchanges)
+                {
                     foreach (var key in rountingKeys)
-                        _requestChannel.QueueBind(queue, exchange, key);
+                    {
+                        try
+                        {
+                            _requestChannel.QueueBind(queue, exchange, key);
+                        }
+                        catch (OperationInterruptedException ex)
+                        {
+                            throw new Exception(ex.ShutdownReason.ReplyText);
+                        }
+
+                    }
+                }
             }
         }
 
@@ -105,8 +118,20 @@ namespace Rcl.Broker.RabbitMQ
             if (rountingKeys != null)
             {
                 foreach (var exchange in exchanges)
+                {
                     foreach (var key in rountingKeys)
-                        _requestChannel.QueueUnbind(queue, exchange, key);
+                    {
+                        try
+                        {
+                            _requestChannel.QueueUnbind(queue, exchange, key);
+                        }
+                        catch (OperationInterruptedException ex)
+                        {
+                            throw new Exception(ex.ShutdownReason.ReplyText);
+                        }
+
+                    }
+                }
             }
         }
 
