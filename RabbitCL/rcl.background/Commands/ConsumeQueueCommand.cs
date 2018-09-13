@@ -25,7 +25,7 @@ namespace rcl.Commands
             var ack = arguments["--ack"] != null ? arguments["--ack"].Value.ToString() : "";
             var output = arguments["--out"] != null ? arguments["--out"].Value.ToString() : "";
 
-            string folder = output == "." || String.IsNullOrEmpty(output) ? Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) : output;
+            string folder = output == "." || String.IsNullOrEmpty(output) ? "." : output;
             if (!Directory.Exists(folder))
                 throw new Exception("OUTPUT PATH DOES NOT EXISTIS");
 
