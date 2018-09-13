@@ -1,22 +1,16 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using DocoptNet;
+﻿using DocoptNet;
 using rcl.Entities;
 using rcl.IO;
+using System.Collections.Generic;
 
 namespace rcl.Commands
 {
     public class SetConfigurationCommand : Command
     {
-        private readonly string _filePath;
-        private readonly string _folderPath;
         private readonly ConfigurationIO _configurationIO;
+
         public SetConfigurationCommand()
         {
-            _folderPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            _filePath = $"{_folderPath}\\config.json";
-
             _configurationIO = new ConfigurationIO();
         }
 
@@ -37,7 +31,7 @@ namespace rcl.Commands
 
             if (configuration == null)
                 configuration = new Configuration();
-            
+
             configuration.AddEnvironment(environment);
 
             _configurationIO.Write(configuration);

@@ -57,6 +57,7 @@
     <Compile Include="Commands\ConsumeQueueCommand.cs" />
     <Compile Include="Commands\GetConfigurationCommand.cs" />
     <Compile Include="Commands\SetConfigurationCommand.cs" />
+    <Compile Include="Commands\UpdateEnvironmentCommand.cs" />
     <Compile Include="Configurations\UsageConfiguration.cs" />
     <Compile Include="Entities\Configuration.cs" />
     <Compile Include="Entities\Environment.cs" />
