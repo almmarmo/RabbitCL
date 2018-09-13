@@ -23,20 +23,23 @@ namespace rcl.background.Commands
         {
             var command = arguments["--command"] != null ? arguments["--command"].Value.ToString() : "";
             var queue = arguments["--queue"] != null ? arguments["--queue"].Value.ToString() : "";
-            var exchange = arguments["--exchange"] != null ? arguments["--exchange"].Value.ToString() : "";
+            var exchangeValues = arguments["--exchange"] != null ? arguments["--exchange"].Value.ToString() : "";
             var keyValues = arguments["--keys"] != null ? arguments["--keys"].Value.ToString() : "";
             var keys = keyValues.Split(',');
+            var exchanges = exchangeValues.Split(',');
 
             using (_queueService)
             {
                 switch (command)
                 {
                     case "add":
-                        _queueService.Bind(queue, exchange, keys);
+                        _queueService.Bind(queue, exchanges, keys);
                         break;
                     case "remove":
-                        _queueService.Unbind(queue, exchange, keys);
+                        _queueService.Unbind(queue, exchanges, keys);
                         break;
+                    default:
+                        throw new Exception("UNKNOW COMMAND.");
                 }
             }
         }

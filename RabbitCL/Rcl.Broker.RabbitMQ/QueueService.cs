@@ -52,12 +52,13 @@ namespace Rcl.Broker.RabbitMQ
             _requestChannel.BasicAck(message.Id, true);
         }
 
-        public void Bind(string queue, string exchange, string[] rountingKeys)
+        public void Bind(string queue, string[] exchanges, string[] rountingKeys)
         {
-            if(rountingKeys != null)
+            if (rountingKeys != null)
             {
-                foreach(var key in rountingKeys)
-                    _requestChannel.QueueBind(queue, exchange, key);
+                foreach (var exchange in exchanges)
+                    foreach (var key in rountingKeys)
+                        _requestChannel.QueueBind(queue, exchange, key);
             }
         }
 
@@ -99,12 +100,13 @@ namespace Rcl.Broker.RabbitMQ
             throw new NotImplementedException();
         }
 
-        public void Unbind(string queue, string exchange, string[] rountingKeys)
+        public void Unbind(string queue, string[] exchanges, string[] rountingKeys)
         {
             if (rountingKeys != null)
             {
-                foreach (var key in rountingKeys)
-                    _requestChannel.QueueUnbind(queue, exchange, key);
+                foreach (var exchange in exchanges)
+                    foreach (var key in rountingKeys)
+                        _requestChannel.QueueUnbind(queue, exchange, key);
             }
         }
 
