@@ -1,4 +1,5 @@
 ﻿using RabbitMQ.Client;
+using RabbitMQ.Client.Exceptions;
 using Rcl.Broker.RabbitMQ.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -52,9 +53,26 @@ namespace Rcl.Broker.RabbitMQ
             _requestChannel.BasicAck(message.Id, true);
         }
 
-        public void Bind(string name, string[] rountingKeys)
+        public void Bind(string queue, string[] exchanges, string[] rountingKeys)
         {
-            throw new NotImplementedException();
+            if (rountingKeys != null)
+            {
+                foreach (var exchange in exchanges)
+                {
+                    foreach (var key in rountingKeys)
+                    {
+                        try
+                        {
+                            _requestChannel.QueueBind(queue, exchange, key);
+                        }
+                        catch (OperationInterruptedException ex)
+                        {
+                            throw new Exception(ex.ShutdownReason.ReplyText);
+                        }
+
+                    }
+                }
+            }
         }
 
         public void Clean(string name)
@@ -95,9 +113,26 @@ namespace Rcl.Broker.RabbitMQ
             throw new NotImplementedException();
         }
 
-        public void Unbind(string name, string[] rountingKeys)
+        public void Unbind(string queue, string[] exchanges, string[] rountingKeys)
         {
-            throw new NotImplementedException();
+            if (rountingKeys != null)
+            {
+                foreach (var exchange in exchanges)
+                {
+                    foreach (var key in rountingKeys)
+                    {
+                        try
+                        {
+                            _requestChannel.QueueUnbind(queue, exchange, key);
+                        }
+                        catch (OperationInterruptedException ex)
+                        {
+                            throw new Exception(ex.ShutdownReason.ReplyText);
+                        }
+
+                    }
+                }
+            }
         }
 
         public void Dispose()

@@ -53,7 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\QueueMessage.cs" />
+    <Compile Include="Commands\BindingsCommand.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\CommandFactory.cs" />
     <Compile Include="Commands\ConsumeQueueCommand.cs" />
     <Compile Include="Commands\GetConfigurationCommand.cs" />
     <Compile Include="Commands\SetConfigurationCommand.cs" />

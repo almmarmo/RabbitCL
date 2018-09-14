@@ -11,7 +11,7 @@ namespace Rcl.Broker
         void Create(string name);
         void Purge(string name);
         void Clean(string name);
-        void Bind(string name, string[] rountingKeys);
-        void Unbind(string name, string[] rountingKeys);
+        void Bind(string queue, string[] exchanges, string[] rountingKeys);
+        void Unbind(string queue, string[] exchanges, string[] rountingKeys);
     }
 }

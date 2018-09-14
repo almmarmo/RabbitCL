@@ -10,6 +10,7 @@ using Rcl.Broker;
 using System.Linq;
 using rcl.background.Enums;
 using Rcl.Broker.RabbitMQ.DependencyInjection;
+using rcl.background.Commands;
 
 namespace rcl
 {
@@ -37,7 +38,7 @@ namespace rcl
 
             try
             {
-                var command = CommandFactory(arguments);
+                var command = CommandFactory.Create(arguments, Container.Resolve<IQueueService>());//  CommandFactory(arguments);
                 try
                 {
                     if (command != null)
@@ -59,21 +60,7 @@ namespace rcl
             {
                 Console.WriteLine($"[ERROR] (COMMAND FACTORY) => {ex.Message}");
             }
-        }
-
-        private static Command CommandFactory(IDictionary<string, ValueObject> arguments)
-        {
-            if (arguments["--config"].IsTrue)
-                return new GetConfigurationCommand();
-            else if (arguments["configuration"].IsTrue)
-                return new SetConfigurationCommand();
-            else if (arguments["consume"].IsTrue)
-                return new ConsumeQueueCommand(Container.Resolve<IQueueService>());
-            else if (arguments["updateenv"].IsTrue)
-                return new UpdateEnvironmentCommand();
-
-            return null;
-        }
+            }
 
         private static void EnvironmentFactory(IDictionary<string, ValueObject> arguments, Configuration config, ContainerBuilder builder)
         {
