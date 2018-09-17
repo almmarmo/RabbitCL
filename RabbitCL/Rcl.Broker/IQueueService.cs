@@ -9,7 +9,8 @@ namespace Rcl.Broker
         void Publish(string message, QueueServicePublishingOptions options = null);
         void Acknowledge(QueueMessage message);
         void Create(string queue, bool durable, bool exclusive, bool autoDelete, CreateQueueSettings settings);
-        void Purge(string name);
+        void Remove(string queue);
+        void Purge(string queue);
         void Clean(string name);
         void Bind(string queue, string[] exchanges, string[] rountingKeys);
         void Unbind(string queue, string[] exchanges, string[] rountingKeys);

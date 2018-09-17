@@ -131,9 +131,9 @@ namespace Rcl.Broker.RabbitMQ
             }
         }
 
-        public void Purge(string name)
+        public void Purge(string queue)
         {
-            throw new NotImplementedException();
+            _requestChannel.QueuePurge(queue);
         }
 
         public void Unbind(string queue, string[] exchanges, string[] rountingKeys)
@@ -164,6 +164,11 @@ namespace Rcl.Broker.RabbitMQ
             _connection.Dispose();
 
             GC.SuppressFinalize(this);
+        }
+
+        public void Remove(string queue)
+        {
+            _requestChannel.QueueDelete(queue);
         }
     }
 }
