@@ -80,9 +80,32 @@ namespace Rcl.Broker.RabbitMQ
             throw new NotImplementedException();
         }
 
-        public void Create(string name)
+        public void Create(string queue, bool durable, bool exclusive, bool autoDelete, CreateQueueSettings settings)
         {
-            throw new NotImplementedException();
+            var arguments = new Dictionary<string, object>();
+
+            if (settings.TTL != TimeSpan.Zero)
+                arguments.Add("x-message-ttl", (int)settings.TTL.TotalMilliseconds);
+
+            if (settings.AutoExpire != TimeSpan.Zero)
+                arguments.Add("x-expires", (int)settings.AutoExpire.TotalMilliseconds);
+
+            if (settings.MaxLength > 0)
+                arguments.Add("x-max-length", settings.MaxLength);
+
+            if (settings.MaxSizeBytes > 0)
+                arguments.Add("x-max-length-bytes", settings.MaxSizeBytes);
+
+            if (settings.MaxPriority > 0)
+                arguments.Add("x-max-priority", settings.MaxPriority);
+
+            if (!string.IsNullOrEmpty(settings.DeadLetterExchange))
+                arguments.Add("x-dead-letter-exchange", settings.DeadLetterExchange);
+
+            if (!string.IsNullOrEmpty(settings.DeadLetterRoutingKey))
+                arguments.Add("x-dead-letter-routing-key", settings.DeadLetterRoutingKey);
+
+            _requestChannel.QueueDeclare(queue, durable, false, autoDelete, arguments);
         }
 
         public ICollection<QueueMessage> Get(string queueName, QueueServiceGetOptions options = null)

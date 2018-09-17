@@ -8,7 +8,8 @@ Usage:
     rcl configuration --name=<name> --broker=<brokerType> --host=<host> --port=<port> --user=<user> --pass=<pass> --ssl=<ssl>
     rcl updateenv     --name=<name> [--broker=<brokerType> --host=<host> --port=<port> --user=<user> --pass=<pass> --ssl=<ssl>]
     rcl consume       -e --env=<environment> -q --queue=<queue> -a --ack=<ack> [-o --out=<destinationFolder>]
-    rcl bindings      -e --env=<environment> -c -command=<command> -q --queue=<queue> --exchange=<exchange> --keys=<keys> 
+    rcl queue         -e --env=<environment> -c --command=<command> -q --queue=<queue> [--durable=<durable> --exclusive=<exclusive> --autodelete=<autodelete>]
+    rcl bindings      -e --env=<environment> -c --command=<command> -q --queue=<queue> --exchange=<exchange> --keys=<keys> 
     rcl               (-h | --help)
     rcl --version
     rcl --config
@@ -25,6 +26,9 @@ Options:
     --pass=PASS             Broker password.
     --ssl=SSL               Broker enable SSL.
     --exchange=EXCHANGE     Exchange or Topic name.
+    --durable=DURABLE       Set queue durable.
+    --exclusive=EXCLUSIVE   Set queue exclusive.
+    --autodelete=AUTODELETE Set queue autodelete.
     -c --command=COMMAND    Command to perform. Values: add, remove.
     -e --env=ENVIRONMENT    Environment instance.
     -q --queue=QUEUE        Broker queue name.

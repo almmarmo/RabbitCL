@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace rcl.background.Commands
+namespace rcl.background.Factories
 {
     public class BindingsCommand : Command
     {

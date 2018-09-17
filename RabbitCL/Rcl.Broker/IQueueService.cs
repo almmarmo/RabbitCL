@@ -8,7 +8,7 @@ namespace Rcl.Broker
         ICollection<QueueMessage> Get(string queueName, QueueServiceGetOptions options = null);
         void Publish(string message, QueueServicePublishingOptions options = null);
         void Acknowledge(QueueMessage message);
-        void Create(string name);
+        void Create(string queue, bool durable, bool exclusive, bool autoDelete, CreateQueueSettings settings);
         void Purge(string name);
         void Clean(string name);
         void Bind(string queue, string[] exchanges, string[] rountingKeys);

@@ -1,16 +1,15 @@
-﻿using DocoptNet;
-using System;
-using rcl.Commands;
-using System.Collections.Generic;
+﻿using Autofac;
+using DocoptNet;
+using rcl.background.Enums;
+using rcl.background.Factories;
 using rcl.Configurations;
-using Autofac;
 using rcl.Entities;
 using rcl.IO;
 using Rcl.Broker;
-using System.Linq;
-using rcl.background.Enums;
 using Rcl.Broker.RabbitMQ.DependencyInjection;
-using rcl.background.Commands;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace rcl
 {
@@ -38,7 +37,7 @@ namespace rcl
 
             try
             {
-                var command = CommandFactory.Create(arguments, Container.Resolve<IQueueService>());//  CommandFactory(arguments);
+                var command = CommandFactory.Create(arguments, ()=> { return Container.Resolve<IQueueService>(); });//  CommandFactory(arguments);
                 try
                 {
                     if (command != null)
@@ -60,18 +59,18 @@ namespace rcl
             {
                 Console.WriteLine($"[ERROR] (COMMAND FACTORY) => {ex.Message}");
             }
-            }
+        }
 
         private static void EnvironmentFactory(IDictionary<string, ValueObject> arguments, Configuration config, ContainerBuilder builder)
         {
-            if(config != null && arguments["--env"] != null)
+            if (config != null && arguments["--env"] != null)
             {
                 var environmentArgument = arguments["--env"].Value.ToString();
 
                 var environment = config.Environments.FirstOrDefault(x => x.Name == environmentArgument);
-                if(environment != null)
+                if (environment != null)
                 {
-                    switch(environment.BrokerType)
+                    switch (environment.BrokerType)
                     {
                         case EBrokerType.RabbitMQ:
                             builder.AddRabbitMQ(options =>
@@ -79,7 +78,7 @@ namespace rcl
                                 options.Host = environment.Host;
                                 options.Port = environment.Port;
                                 options.EnableSsl = environment.Ssl;
-                                options.Username  = environment.Username;
+                                options.Username = environment.Username;
                                 options.Password = environment.Password;
                             });
                             break;
